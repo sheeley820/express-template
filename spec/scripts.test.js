@@ -39,19 +39,28 @@ describe("scripts", () => {
         })
 
         it("should create element using the document object", () => {
-            const documentSpy = jest.spyOn(dom.window.document, "createElement")
+            //Use Jest to mock an object
+            const mockElement = jest.fn(arg => { {textContent: ""} })
+            const documentSpy = jest.spyOn(dom.window.document, "createElement").mockReturnValue(mockElement)
 
             dom.window.helloWorld()
 
             expect(documentSpy).toBeCalledTimes(1)
+            expect(mockElement.textContent).toEqual("World")
         })
 
-        // it("should create element using the document object", () => {
-        //     const documentSpy = jest.spyOn(dom.window.document, "createElement")
+        it("should add the new element after the hello element", () => {
+            //Create our own stubs to be returned
+            const stubHelloElement = { "after" : () => {} }
+            const stubWorldElement = { textContent: "" }
+            jest.spyOn(dom.window.document, "getElementById").mockReturnValue(stubHelloElement)
+            jest.spyOn(dom.window.document, "createElement").mockReturnValue(stubWorldElement)
+            const afterSpy = jest.spyOn(stubHelloElement, "after")
 
-        //     dom.window.helloWorld()
+            dom.window.helloWorld()
 
-        //     expect(documentSpy).toBeCalledTimes(1)
-        // })
+            expect(afterSpy).toBeCalledTimes(1)
+            expect(afterSpy).toBeCalledWith(stubWorldElement)
+        })
     })
 })
