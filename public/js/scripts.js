@@ -5,4 +5,8 @@ function helloWorld() {
     helloElement.after(worldElement)
 }
 
+function changeColor(el) {
+    el.style.color = "blue"
+}
+
 helloWorld()
