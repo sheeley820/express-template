@@ -12,11 +12,13 @@ app.use(
     bodyParser.json()
 )
 
-let mongoClient = routerBuilder.buildConnection()
-
-routerBuilder.buildRouter(mongoClient, dbName).then(router => {
-  app.use("/", router)
-  app.listen(port, function() {
-    console.log('Node is listening on port '+ port + '...')
-  });
-})
+routerBuilder.buildConnection()
+  .then(connectedClient => routerBuilder.buildRouter(connectedClient, dbName))
+  .then(router => {
+    app.use("/", router)
+    app.listen(port, function() {
+      console.log('Node is listening on port '+ port + '...')
+    });
+  }).catch(err, () => {
+    console.error(err)
+  })

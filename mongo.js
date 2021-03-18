@@ -16,14 +16,6 @@ function getCollection(db, collectionName) {
     return db.collection(collectionName)
 }
 
-// .then(connectedClient => {
-//   console.log('Connected successfully to server');
-
-//   db = client.db(dbName);
-
-//   client.close().then(() => console.log("Closing db connection..."));
-// }).catch(err => console.error(err))
-
 module.exports = {
     getClient : getClient,
     getDatabase: getDatabase,

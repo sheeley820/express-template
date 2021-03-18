@@ -12,20 +12,19 @@ describe('insert', () => {
   let db;
   let router;
 
-  beforeAll((done) => {
-      connection = mongo.getClient(new MongoClient(process.env.MONGO_URL, {
+  beforeAll(async () => {
+      connection = await mongo.getClient(new MongoClient(process.env.MONGO_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true
       }));
-      routerBuilder.buildRouter(connection, "test").then(resolvedRouter => {
+      await routerBuilder.buildRouter(connection, "test").then(resolvedRouter => {
         router = resolvedRouter
         app.use("/", router)
-        done()
       })
   });
 
   beforeEach(async () => {
-    db = await connection.then(client => client.db('test'))
+    db = connection.db('test')
     await db.collection('test').deleteMany({});
     await db.collection('test').insertMany(mockData);
   });
