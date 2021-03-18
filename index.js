@@ -11,19 +11,6 @@ app.use(
     bodyParser.urlencoded({ extended: false }),
     bodyParser.json()
 )
-// app.get("/", (req, res) => res.sendFile(__dirname + "index.html"))
-
-// app.get("/json", (req, res) => {
-//   let message = "Hellow World"
-//   res.json({ "message": message })
-// })
-
-// app.get("/now", (req, res, next) => {
-//   req.time = new Date().toString()
-//   next()
-// }, (req, res) => {
-//   res.json({time: req.time})
-// })
 
 let mongoClient = routerBuilder.buildConnection()
 

@@ -11,23 +11,21 @@ function buildRouter(client, dbName) {
     let router = new Router()
 
     client.then(connectedClient => {
-        console.log('Connected successfully to server');
+        console.info('Connected successfully to server');
         db = mongo.getDatabase(connectedClient, dbName);
         kittenCollection = mongo.getCollection(db, process.env.KITTEN_COLLECTION)
     
         router.get("/test", (req, res) => {
-            console.table(req.query)
-            console.log(`Collection: ${process.env.KITTEN_COLLECTION}`)
             kittenCollection.find({ "name": req.query.name }).toArray().then(result => {
-                console.log(result)
                 res.json({ "result" : result })
             })
             
         })
       }).catch(err => console.error(err))
 
+      router.get("/", (req, res) => res.sendFile(__dirname + "index.html"))
+
       router.get("/message", (req, res) => {
-        console.log("In our router.")
         res.json({ "message": "Hello!" })
     })
 
