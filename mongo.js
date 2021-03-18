@@ -4,8 +4,16 @@ const dbName = 'myproject';
 const client = new MongoClient(url);
 let db
 
-function getClient() {
-    return client.connect()
+function getClient(mongoClient = client) {
+    return mongoClient.connect()
+}
+
+function getDatabase(client, dbName) {
+    return (dbName) ? client.db(dbName) : client.db()
+}
+
+function getCollection(db, collectionName) {
+    return db.collection(collectionName)
 }
 
 // .then(connectedClient => {
@@ -17,5 +25,7 @@ function getClient() {
 // }).catch(err => console.error(err))
 
 module.exports = {
-    getClient : getClient
+    getClient : getClient,
+    getDatabase: getDatabase,
+    getCollection: getCollection
 }

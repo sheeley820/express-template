@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Fluffy",
+        "breed": "siamese"
+    },
+    {
+        "name": "Dasha",
+        "breed": "manx"
+    },
+    {
+        "name": "Spots",
+        "breed": "siberian forest cat"
+    },
+    {
+        "name": "Midnight",
+        "breed": "mexican hairless"
+    },
+    {
+        "name": "Chipmunk",
+        "breed": "tabby"
+    }
+  ]
