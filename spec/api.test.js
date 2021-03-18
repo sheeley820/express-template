@@ -1,4 +1,4 @@
-const {MongoClient} = require('mongodb');
+const { MongoClient } = require('mongodb');
 const express = require("express");
 const app = express();
 let routerBuilder = require('../router')
@@ -12,8 +12,8 @@ describe('insert', () => {
   let db;
   let router;
 
-  beforeAll((done) => {
-      connection = mongo.getClient(new MongoClient(process.env.MONGO_URL, {
+  beforeAll(async (done) => {
+      connection = await mongo.getClient(new MongoClient(process.env.MONGO_URL, {
         useNewUrlParser: true,
         useUnifiedTopology: true
       }));

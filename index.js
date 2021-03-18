@@ -1,10 +1,12 @@
-var express = require('express');
-var app = express();
-const bodyParser = require("body-parser")
-var port = process.env.PORT || 3000;
-const routerBuilder = require("./router")
-const url = 'mongodb://localhost:27017';
-const dbName = "test"
+const express = require('express');
+const bodyParser = require('body-parser')
+require('dotenv').config()
+const routerBuilder = require('./router')
+const mongo = require('./mongo')
+
+const PORT = process.env.PORT || 3000;
+
+let app = express();
 
 app.use(
     express.static(__dirname + "/public"), 
@@ -12,11 +14,11 @@ app.use(
     bodyParser.json()
 )
 
-let mongoClient = routerBuilder.buildConnection()
+let mongoClient = mongo.getClient()
 
-routerBuilder.buildRouter(mongoClient, dbName).then(router => {
+routerBuilder.buildRouter(mongoClient).then(router => {
   app.use("/", router)
   app.listen(port, function() {
-    console.log('Node is listening on port '+ port + '...')
+    console.log(`Node is listening on port ${PORT}...`)
   });
 })

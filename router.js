@@ -1,41 +1,33 @@
 const { Router } = require('express')
 const mongo = require("./mongo")
-let db
-require('dotenv').config()
+const DB_NAME = process.env.DB_NAME || "test"
 
-function buildConnection() {
-    return mongo.getClient()
-}
-
-function buildRouter(client, dbName) {
+async function buildRouter(client) {
+    console.log(`Client: ${client}`)
     let router = new Router()
-
-    client.then(connectedClient => {
-        console.info('Connected successfully to server');
-        db = mongo.getDatabase(connectedClient, dbName);
-        kittenCollection = mongo.getCollection(db, process.env.KITTEN_COLLECTION)
+    let db = await mongo.getDatabase(client, DB_NAME)
     
-        router.get("/test", (req, res) => {
-            kittenCollection.find({ "name": req.query.name }).toArray().then(result => {
-                res.json({ "result" : result })
-            })
-            
-        })
-      }).catch(err => console.error(err))
+    router.get("/test", async (req, res) => {
+        kittenCollection = mongo.getCollection(db, process.env.KITTEN_COLLECTION)
+        let result = await kittenCollection.find({ "name": req.query.name }).toArray()
+        res.json({ "result" : result })
+    })
 
-      router.get("/", (req, res) => res.sendFile(__dirname + "index.html"))
+    router.get("/", (req, res) => res.sendFile(__dirname + "index.html"))
 
-      router.get("/message", (req, res) => {
+    router.get("/message", (req, res) => {
         res.json({ "message": "Hello!" })
     })
 
     return new Promise((resolve, reject) => {
-        resolve(router)
-        reject("There was an error")
+        if(router) {
+            resolve(router)
+        } else {
+            reject("There was an error")
+        }
     })
 }
 
 module.exports = {
-    buildConnection: buildConnection,
     buildRouter: buildRouter
 }

@@ -1,28 +1,23 @@
 const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017';
-const dbName = 'myproject';
-const client = new MongoClient(url);
-let db
+const URL = process.env.MONGO_URL || 'mongodb://localhost:27017';
+const defaultOptions = {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+      }
 
-function getClient(mongoClient = client) {
-    return mongoClient.connect()
+async function getClient(options = defaultOptions) {
+    console.info('Connected successfully to server');
+    let client = await MongoClient.connect(URL, options);
+    return client
 }
 
-function getDatabase(client, dbName) {
-    return (dbName) ? client.db(dbName) : client.db()
+async function getDatabase(client, dbName) {
+    return await (dbName) ? client.db(dbName) : client.db()
 }
 
-function getCollection(db, collectionName) {
-    return db.collection(collectionName)
+async function getCollection(db, collectionName) {
+    return await db.collection(collectionName)
 }
-
-// .then(connectedClient => {
-//   console.log('Connected successfully to server');
-
-//   db = client.db(dbName);
-
-//   client.close().then(() => console.log("Closing db connection..."));
-// }).catch(err => console.error(err))
 
 module.exports = {
     getClient : getClient,
