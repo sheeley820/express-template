@@ -1,10 +1,8 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+let app = express();
 const bodyParser = require("body-parser")
-var port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 const routerBuilder = require("./router")
-const url = 'mongodb://localhost:27017';
-const dbName = "test"
 
 app.use(
     express.static(__dirname + "/public"), 
@@ -13,11 +11,11 @@ app.use(
 )
 
 routerBuilder.buildConnection()
-  .then(connectedClient => routerBuilder.buildRouter(connectedClient, dbName))
+  .then(connectedClient => routerBuilder.buildRouter(connectedClient))
   .then(router => {
     app.use("/", router)
-    app.listen(port, function() {
-      console.log('Node is listening on port '+ port + '...')
+    app.listen(PORT, function() {
+      console.log('Node is listening on port '+ PORT + '...')
     });
   }).catch(err, () => {
     console.error(err)
