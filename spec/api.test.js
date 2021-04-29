@@ -1,4 +1,4 @@
-const {MongoClient} = require('mongodb');
+const { MongoClient } = require('mongodb');
 const express = require("express");
 const app = express();
 let routerBuilder = require('../router')
@@ -7,7 +7,7 @@ const request = require("supertest");
 const mockData = require('./mock-data.json')
 
 process.env.DB_NAME = 'test'
-process.env.KITTEN_COLLECTION = 'test'
+process.env.TARGET_COLLECTION = 'test'
 
 describe('insert', () => {
   let connection;
@@ -57,12 +57,5 @@ describe('insert', () => {
           expect(body.status).toEqual(200)
           console.log("Hahahaha")})
         .catch(() => console.error)
-
-    // db.collection(KITTEN_COLLECTION)
-    //   .findOne({ "name": "tj" })
-    //   .toArray()
-    //   .then(doc => {
-    //     expect(doc.name).toEqual("tj")
-    //   })
   });
 });
