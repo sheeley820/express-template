@@ -6,8 +6,8 @@ let mongo = require('../mongo')
 const request = require("supertest");
 const mockData = require('./mock-data.json')
 
-process.env.DB_NAME = 'test'
-process.env.TARGET_COLLECTION = 'test'
+process.env.DB_NAME = 'testDB'
+process.env.TARGET_COLLECTION = 'testCollection'
 
 describe('insert', () => {
   let connection;
@@ -25,8 +25,8 @@ describe('insert', () => {
   });
 
   beforeEach(async () => {
-    await db.collection('test').deleteMany({});
-    await db.collection('test').insertMany(mockData);
+    await db.collection(process.env.TARGET_COLLECTION).deleteMany({});
+    await db.collection(process.env.TARGET_COLLECTION).insertMany(mockData);
   });
 
   afterAll(async () => {

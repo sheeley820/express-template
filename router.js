@@ -22,7 +22,8 @@ async function buildRouter(client) {
                 targetCollection.find({ "name": req.query.name })
                         .toArray()
                         .then(result => {
-                            res.status(200).json({ "result" : result })
+                            res.status(200)
+                            .json({ "result" : result })
                         })
           })
           .post((req, res) => {
