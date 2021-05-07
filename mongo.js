@@ -1,6 +1,5 @@
-const MongoClient = require('mongodb').MongoClient;
-const url = 'mongodb://localhost:27017';
-const client = new MongoClient(process.env.MONGO_URL);
+const MongoClient = require('mongodb').MongoClient
+const client = new MongoClient(process.env.MONGO_URL)
 
 function getClient(mongoClient = client) {
     return mongoClient.connect()

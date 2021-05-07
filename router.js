@@ -1,5 +1,5 @@
 const { Router } = require('express')
-const mongo = require("./mongo")
+const mongo = require('./mongo')
 require('dotenv').config()
 const DB_NAME = process.env.DB_NAME || "test"
 
@@ -8,30 +8,32 @@ function buildConnection() {
 }
 
 async function buildRouter(client) {
-    console.info('Connected successfully to server');
     let router = new Router()
 
     let db = await mongo.getDatabase(client, DB_NAME);
-    let kittenCollection = await mongo.getCollection(db, process.env.KITTEN_COLLECTION)
+    let targetCollection = await mongo.getCollection(db, process.env.TARGET_COLLECTION)
 
-    router.get("/", (req, res) => res.sendFile(__dirname + "index.html"))
+    router.get('/', (req, res) => res.sendFile(__dirname + "index.html"))
+
+    router.get('/ping', (req, res) => res.status(200).send('Server is up.'))
 
     router.route('/test')
           .get((req, res) => {
-                kittenCollection.find({ "name": req.query.name })
+                targetCollection.find({ "name": req.query.name })
                         .toArray()
                         .then(result => {
-                            res.json({ "result" : result })
+                            res.status(200)
+                            .json({ "result" : result })
                         })
           })
           .post((req, res) => {
-                kittenCollection.insert(req.body.data)
+                targetCollection.insert(req.body.data)
                 res.status(200)
-                res.send("Yo")
+                res.send('Yo')
           })
 
-    router.get("/message", (req, res) => {
-        res.json({ "message": "Hello!" })
+    router.get('/message', (req, res) => {
+        res.status(200).json({ "message": "Hello!" })
     })
 
     return router
