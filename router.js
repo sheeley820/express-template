@@ -1,7 +1,7 @@
 const { Router } = require('express')
 const mongo = require('./mongo')
 require('dotenv').config()
-const DB_NAME = process.env.DB_NAME || "test"
+const DB_NAME = process.env.DB_NAME
 
 function buildConnection() {
     return mongo.getClient()
@@ -27,9 +27,14 @@ async function buildRouter(client) {
                         })
           })
           .post((req, res) => {
-                targetCollection.insert(req.body.data)
-                res.status(200)
-                res.send('Yo')
+            targetCollection.insertOne(req.body)
+                .then(result => {
+                    res.status(200)
+                    .json({ "result": result})
+                }).catch((err) => {
+                    res.status(400)
+                    .json({ "error": err})
+                })
           })
 
     router.get('/message', (req, res) => {

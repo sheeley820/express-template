@@ -55,7 +55,7 @@ describe('insert', () => {
         .then((res) => {
           body = res
           expect(body.status).toEqual(200)
-          console.log("Hahahaha")})
+        })
         .catch(() => console.error)
   });
 });
