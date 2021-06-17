@@ -62,5 +62,11 @@ describe("scripts", () => {
             expect(afterSpy).toBeCalledTimes(1)
             expect(afterSpy).toBeCalledWith(stubWorldElement)
         })
+
+        it("should use the add function and display the result in an H1 element", () => {
+            const sumElement = dom.window.document.getElementById("sum")
+
+            expect(sumElement.innerText).toEqual(20)
+        })
     })
 })

@@ -10,3 +10,5 @@ function changeColor(el) {
 }
 
 helloWorld()
+
+document.getElementById("sum").innerText = add(10, 10)
