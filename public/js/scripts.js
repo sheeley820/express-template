@@ -6,7 +6,7 @@ function helloWorld() {
 }
 
 function changeColor(el) {
-    el.style.color = "blue"
+    el.classList.add("active")
 }
 
 helloWorld()

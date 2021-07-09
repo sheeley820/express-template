@@ -37,6 +37,18 @@ async function buildRouter(client) {
                 })
           })
 
+    router.route('/postTest')
+        .post((req, res) => {
+            let request = req.body
+            if (request.hasOwnProperty('message')) {
+                res.status(200)
+                .json({ message: "Thanks"})
+            } else {
+                res.status(400)
+                .json({ message: "Please send json with 'message' key"})
+            }
+        })
+
     router.get('/message', (req, res) => {
         res.status(200).json({ "message": "Hello!" })
     })

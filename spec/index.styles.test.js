@@ -33,15 +33,17 @@ describe("scripts", () => {
         it("should set greeting paragraph text to red", () => {
             const greetingElement = dom.window.document.getElementById("greeting")
             
-            expect(greetingElement.style.color).toEqual("red")
+            expect(dom.window.getComputedStyle(greetingElement).color).toEqual("red")
         })
 
         it("should set greeting paragraph text to blue when user click on it", () => {
             const greetingElement = dom.window.document.getElementById("greeting")
-            
+            let empty = ""
+            expect(dom.window.getComputedStyle(greetingElement).color).toEqual("red")
+
             fireEvent.click(greetingElement)
 
-            expect(greetingElement.style.color).toEqual("blue")
+            expect(dom.window.getComputedStyle(greetingElement).color).toEqual("blue")
         })
     })
 })

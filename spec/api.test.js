@@ -5,6 +5,7 @@ let routerBuilder = require('../router')
 let mongo = require('../mongo')
 const request = require("supertest");
 const mockData = require('./mock-data.json')
+const bodyParser = require('body-parser')
 
 process.env.DB_NAME = 'testDB'
 process.env.TARGET_COLLECTION = 'testCollection'
@@ -12,6 +13,12 @@ process.env.TARGET_COLLECTION = 'testCollection'
 describe('insert', () => {
   let connection;
   let db;
+
+  app.use(
+    bodyParser.urlencoded({extended: false}),
+    bodyParser.json(),
+    express.json()
+)
 
   beforeAll(async () => {
       connection = await mongo.getClient(new MongoClient(process.env.MONGO_URL, {
@@ -58,4 +65,19 @@ describe('insert', () => {
         })
         .catch(() => console.error)
   });
+
+  it('should be able to make a post request', async () => {
+    let body
+    await request(app)
+        .post('/postTest')
+        .set('Content-Type', 'application/json')
+        .send('{"message": "hi"}')
+        .then((res) => {
+            body = res
+            
+            // expect(res.body.message).toEqual('Thanks')
+        })
+        .catch((err) => console.error(err))
+    expect(body.status).toEqual(200)
+  })
 });

@@ -1,3 +1,11 @@
 p {
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
+
+#greeting {
+    color: red;
+}
+
+#greeting.active {
+    color: blue;
+}
