@@ -1,5 +1,6 @@
 const { Router } = require('express')
 const mongo = require('./mongo')
+const fs = require('fs')
 require('dotenv').config()
 const DB_NAME = process.env.DB_NAME
 
@@ -51,6 +52,12 @@ async function buildRouter(client) {
 
     router.get('/message', (req, res) => {
         res.status(200).json({ "message": "Hello!" })
+    })
+
+    router.get('/data', (req, res) => {
+        let rawData = fs.readFileSync('./csvjson.json')
+        let parsedData = JSON.parse(rawData)
+        res.json(parsedData.data)
     })
 
     return router

@@ -22,11 +22,11 @@ describe("scripts", () => {
       })
 
     describe("computedStyles", () => {
-        it("should set font family of paragraph text to Franklin Gothic Medium", () => {
+        it("should set font family of paragraph text to Poppin", () => {
             const pElements = body.getElementsByTagName("p")
 
             for(let element of pElements) {
-                expect(dom.window.getComputedStyle(element).fontFamily).toContain("Franklin Gothic Medium")
+                expect(dom.window.getComputedStyle(element).fontFamily).toContain("Poppin")
             }
         })
 
