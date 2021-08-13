@@ -1,6 +1,11 @@
 require('dotenv').config()
 const MongoClient = require('mongodb').MongoClient
-const client = new MongoClient(process.env.MONGO_URL)
+const client = new MongoClient(process.env.MONGO_URL, {
+    // retry to connect for 60 times
+    reconnectTries: 5,
+    // wait 1 second before retrying
+    reconnectInterval: 1000
+})
 
 function getClient(mongoClient = client) {
     return mongoClient.connect()

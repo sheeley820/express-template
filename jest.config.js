@@ -4,5 +4,6 @@ module.exports = {
   testPathIgnorePatterns: [
     "/node_modules/",
   ],
-  "preset": "@shelf/jest-mongodb"
+  "preset": "@shelf/jest-mongodb",
+  verbose: true
 };
