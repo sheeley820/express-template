@@ -2,7 +2,7 @@ version: "3"
 services:
   login-app:
     container_name: node-express-test
-    build: .
+    image: gsheeley/node-express
     volumes:
       - ./:/app
     ports:
